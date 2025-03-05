@@ -18,11 +18,10 @@ class CodeFileExtractor(ABC):
         Returns:
             str: Content of the file.
         """
-        self._validate_file_path(path)
+        if not self._validate_file_path(path):
+            raise ValueError(f"File at path {path} has an invalid extension. Expected one of: {', '.join(self.get_valid_extensions())}")
         
-        with open(path, 'r') as file:
-            content = file.read()
-        return content
+        return self._extract_single_file(path)
     
     def extract_content_zip_files(self, path):
         """Extract the content of all code files in a zip file.
@@ -44,8 +43,11 @@ class CodeFileExtractor(ABC):
         for root, _, files in os.walk(self.extracted_path):
             for file in files:
                 file_path = os.path.join(root, file)
-                content = self.extract_content_single_file(file_path)
-                content_dict[file_path] = content
+                if not self._validate_file_path(file_path):
+                    continue
+                content = self._extract_single_file(file_path)
+                relative_path = os.path.relpath(file_path, self.extracted_path)
+                content_dict[relative_path] = content
         
         return content_dict
     
@@ -68,6 +70,19 @@ class CodeFileExtractor(ABC):
         """
         pass
     
+    def _extract_single_file(self, path):
+        """Extract the content of a single code file.
+        
+        Args:
+            path (str): Path to the file.
+            
+        Returns:
+            str: Content of the file.
+        """
+        with open(path, 'r') as file:
+            content = file.read()
+        return content
+    
     def _validate_file_path(self, path):
             """Validate the file path.
             
@@ -83,7 +98,8 @@ class CodeFileExtractor(ABC):
             # Check if the file has a valid extension
             valid_extensions = self.get_valid_extensions()
             if not any(path.endswith(ext) for ext in valid_extensions):
-                raise ValueError(f"File at path {path} has an invalid extension. Expected one of: {', '.join(valid_extensions)}")
+                return False
+            return True
     
     def _extract_zip_file(self, path):
         """Extract a zip file to a temporary directory.

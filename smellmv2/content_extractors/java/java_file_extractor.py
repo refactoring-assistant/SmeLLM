@@ -24,7 +24,7 @@ if __name__ == '__main__':
     illegalpath = r'trial-files\LargeClassBadExample'
     pythonpath = r'trial-files\interface_chat_api.py'
     legalpath = r'trial-files\LargeClassBadExample.java'
-    zipfile = r'trial-files\trial.zip'
+    zipfile = r'trial-files\trialfiles.zip'
     try:
         content = jfe.extract_content_single_file(illegalpath)
     except Exception as e:
