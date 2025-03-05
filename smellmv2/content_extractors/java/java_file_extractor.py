@@ -24,6 +24,7 @@ if __name__ == '__main__':
     illegalpath = r'trial-files\LargeClassBadExample'
     pythonpath = r'trial-files\interface_chat_api.py'
     legalpath = r'trial-files\LargeClassBadExample.java'
+    zipfile = r'trial-files\trial.zip'
     try:
         content = jfe.extract_content_single_file(illegalpath)
     except Exception as e:
@@ -37,6 +38,16 @@ if __name__ == '__main__':
     try:
         content = jfe.extract_content_single_file(legalpath)
         print(content)
+    except Exception as e:
+        print(f"Error: {e}")
+        
+    try:
+        content_dict = jfe.extract_content_zip_files(zipfile)
+        print(content_dict)
+        try:
+            jfe.cleanup_extracted_files()
+        except Exception as e:
+            print(f"Error: {e}")
     except Exception as e:
         print(f"Error: {e}")
     
