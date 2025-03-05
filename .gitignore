@@ -1,0 +1,5 @@
+*-env/
+*.env
+trial-files/
+__pycache__/
+*.pyc
