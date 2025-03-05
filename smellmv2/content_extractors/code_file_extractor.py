@@ -18,10 +18,10 @@ class CodeFileExtractor(ABC):
         Returns:
             str: Content of the file.
         """
-        if not self._validate_file_path(path):
+        if not self.__validate_file_path(path):
             raise ValueError(f"File at path {path} has an invalid extension. Expected one of: {', '.join(self.get_valid_extensions())}")
         
-        return self._extract_single_file(path)
+        return self.__extract_single_file(path)
     
     def extract_content_zip_files(self, path):
         """Extract the content of all code files in a zip file.
@@ -34,18 +34,17 @@ class CodeFileExtractor(ABC):
         """
         # Extract the zip file
         try:
-            self.extracted_path = self._extract_zip_file(path)
+            self.extracted_path = self.__extract_zip_file(path)
         except Exception as e:
             raise ValueError(f"Error extracting zip file at path {path}: {e}")
         
-        # Get the content of all code files
         content_dict = {}
         for root, _, files in os.walk(self.extracted_path):
             for file in files:
                 file_path = os.path.join(root, file)
-                if not self._validate_file_path(file_path):
+                if not self.__validate_file_path(file_path):
                     continue
-                content = self._extract_single_file(file_path)
+                content = self.__extract_single_file(file_path)
                 relative_path = os.path.relpath(file_path, self.extracted_path)
                 content_dict[relative_path] = content
         
@@ -70,7 +69,7 @@ class CodeFileExtractor(ABC):
         """
         pass
     
-    def _extract_single_file(self, path):
+    def __extract_single_file(self, path):
         """Extract the content of a single code file.
         
         Args:
@@ -83,7 +82,7 @@ class CodeFileExtractor(ABC):
             content = file.read()
         return content
     
-    def _validate_file_path(self, path):
+    def __validate_file_path(self, path):
             """Validate the file path.
             
             Args:
@@ -101,7 +100,7 @@ class CodeFileExtractor(ABC):
                 return False
             return True
     
-    def _extract_zip_file(self, path):
+    def __extract_zip_file(self, path):
         """Extract a zip file to a temporary directory.
         
         Args:

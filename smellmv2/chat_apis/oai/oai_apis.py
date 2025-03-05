@@ -27,7 +27,7 @@ class OAI(ChatAPI):
         Raises:
             EnvironmentError: If the OAI_KEY environment variable is not found.
         """
-        if not self._validate_model_name(model_name):
+        if not self.__validate_model_name(model_name):
             raise ValueError(f"Model name {model_name} is not valid.")
         self.model_name = model_name
         self.OAI_KEY = os.getenv("OAI_KEY")
@@ -51,7 +51,7 @@ class OAI(ChatAPI):
         Raises:
             ValueError: If there is an error with the OpenAI API or if the conversation history is invalid.
         """
-        self._validate_conversation_history(conversations_history)
+        self.__validate_conversation_history(conversations_history)
         try:
             response = self.oai_client.chat.completions.create(
                 model=self.model_name,
@@ -61,7 +61,7 @@ class OAI(ChatAPI):
             raise ValueError(f"Error with OpenAI API: {e}")
         return response.choices[0].message.content
     
-    def _validate_conversation_history(self, conversations_history):
+    def __validate_conversation_history(self, conversations_history):
         """
         Validates the conversation history.
 
@@ -71,10 +71,10 @@ class OAI(ChatAPI):
         Raises:
             ValueError: If the conversation history is invalid.
         """
-        self._validate_conversation_list(conversations_history)
-        self._validate_conversation_roles(conversations_history)
+        self.__validate_conversation_list(conversations_history)
+        self.__validate_conversation_roles(conversations_history)
     
-    def _validate_conversation_roles(self, conversations_history):
+    def __validate_conversation_roles(self, conversations_history):
         """
         Validates the roles in the conversation history based on the first two roles and the last role.
 
@@ -91,7 +91,7 @@ class OAI(ChatAPI):
         if conversations_history[-1].get("role") != "user":
             raise ValueError("The last message must be a user prompt")
     
-    def _validate_conversation_list(self, conversations_history):
+    def __validate_conversation_list(self, conversations_history):
         """
         Validates the conversation history list based on basic parameters of length of list.
 
@@ -108,7 +108,7 @@ class OAI(ChatAPI):
         if len(conversations_history) < 2:
             raise ValueError("conversations_history must contain at least two messages")
         
-    def _validate_model_name(self, model_name):
+    def __validate_model_name(self, model_name):
         """
         Validate if the provided model name exists in oai_models.json.
         
