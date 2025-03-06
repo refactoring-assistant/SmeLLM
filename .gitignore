@@ -3,3 +3,4 @@
 trial-files/
 __pycache__/
 *.pyc
+output-*

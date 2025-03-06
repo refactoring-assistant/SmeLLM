@@ -8,6 +8,7 @@ import config.constants as constants
 from process_args.process_file import ProcessFile
 from process_args.process_zipfile import ProcessZipFile
 from process_args.process_folder import ProcessFolder
+from output.save_data import SaveData
 
 class SmeLLM:
     def __init__(self):
@@ -72,19 +73,28 @@ class SmeLLM:
     
     def run(self):
         """Run the SmeLLM tool with the provided arguments."""
-        args = self.parse_arguments()
-        
-        print(f"Language: {args.lang}")
-        
-        if args.file:
-            print(f"Processing file: {args.file}")
-            ProcessFile(args.file, args.lang)
-        elif args.folder:
-            print(f"Processing folder: {args.folder}")
-            ProcessFolder(args.folder, args.lang)
-        elif args.zipfile:
-            print(f"Processing ZIP file: {args.zipfile}")
-            ProcessZipFile(args.zipfile, args.lang)
+        try:
+            args = self.parse_arguments()
+            
+            print(f"Language: {args.lang}")
+            
+            if args.file:
+                print(f"Processing file: {args.file}")
+                processor = ProcessFile(args.file, args.lang)
+            elif args.folder:
+                print(f"Processing folder: {args.folder}")
+                processor = ProcessFolder(args.folder, args.lang)
+            elif args.zipfile:
+                print(f"Processing ZIP file: {args.zipfile}")
+                processor = ProcessZipFile(args.zipfile, args.lang)
+            
+            processed_data = processor.process()
+            
+            save_data = SaveData()
+            saved_dir = save_data.save_file(processed_data)
+            print(f"Processed data saved to: {saved_dir}")
+        except Exception as e:
+            print(f"Error: {e}")
             
     def __validate_args_paths(self, args):
         """Validate the paths provided in the arguments.

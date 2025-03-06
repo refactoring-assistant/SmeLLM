@@ -12,6 +12,7 @@ class ProcessZipFile():
     def __init__(self, file_path, file_type, model_name="gpt-4o-mini"):
         self.model_name = model_name
         self.conversation_histories = []
+        self.relative_paths = []
         match file_type:
             case "java":
                 self.file_extractor = JavaFileExtractor()
@@ -25,6 +26,7 @@ class ProcessZipFile():
             raise ValueError(f"Error in extracting zipfile: {e}")
         try:
             for relative_path, file_content in zipfile_content.items():
+                self.relative_paths.append(relative_path)
                 formatted_user_input = f"{relative_path} : {file_content}"
                 prompt_generator = Prompt(formatted_user_input)
                 self.conversation_histories.append(prompt_generator.get_conversation_start())
@@ -36,11 +38,11 @@ class ProcessZipFile():
             match api:
                 case "OAI":
                     oai = OAI(self.model_name)
-                    response_list = []
-                    for conversation_history in self.conversation_histories:
-                        response = oai.chat_completion(conversations_history=conversation_history)
-                        response_list.append(response)
-                    return response_list
+                    response_dict = {}
+                    for conversation_index in range(len(self.conversation_histories)):
+                        response = oai.chat_completion(conversations_history=self.conversation_histories[conversation_index])
+                        response_dict[self.relative_paths[conversation_index]] = response
+                    return response_dict
                 case _:
                     raise ValueError(f"Invalid API type: {api}")
             

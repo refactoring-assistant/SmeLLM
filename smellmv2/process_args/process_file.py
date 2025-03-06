@@ -11,6 +11,7 @@ from chat_apis.oai.oai_apis import OAI
 class ProcessFile():
     def __init__(self, file_path, file_type, model_name="gpt-4o-mini"):
         self.model_name = model_name
+        self.file_path = file_path
         match file_type:
             case "java":
                 self.file_extractor = JavaFileExtractor()
@@ -19,11 +20,11 @@ class ProcessFile():
             case _:
                 raise ValueError(f"Invalid file type: {file_type}")
         try:
-            file_content = self.file_extractor.extract_content_single_file(file_path)
+            file_content = self.file_extractor.extract_content_single_file(self.file_path)
         except Exception as e:
             raise ValueError(f"Error in extracting file: {e}")
         try:
-            formatted_user_input = f"{file_path} : {file_content}"
+            formatted_user_input = f"{self.file_path} : {file_content}"
             prompt_generator = Prompt(formatted_user_input)
             self.conversation_history = prompt_generator.get_conversation_start()
         except Exception as e:
@@ -35,7 +36,7 @@ class ProcessFile():
                 case "OAI":
                     oai = OAI(self.model_name)
                     response = oai.chat_completion(conversations_history=self.conversation_history)
-                    return response
+                    return {self.file_path: response}
                 case _:
                     raise ValueError(f"Invalid API type: {api}")
             
