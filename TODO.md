@@ -1,0 +1,5 @@
+- Add github action to run when code is pushed to repo.
+- Reduce some more duplication such as duplication in process_folder and process_zipfile.
+- Add support for user to enter models they wish to run.
+- Add support for new API types.
+- Possibly add a UI (maybe streamlit) for user.
