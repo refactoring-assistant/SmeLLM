@@ -15,7 +15,7 @@ class TypeScriptFileExtractor(CodeFileExtractor):
         Returns:
             list: List of valid TypeScript file extensions.
         """
-        return [constants.TYPESCRIPT_FILE_EXTENSION, constants.TYPESCRIPT_JSX_FILE_EXTENSION]
+        return constants.TYPESCRIPT_FILE_EXTENSIONS
 
     
 

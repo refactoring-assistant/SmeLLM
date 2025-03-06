@@ -78,9 +78,16 @@ class CodeFileExtractor(ABC):
         Returns:
             str: Content of the file.
         """
-        with open(path, 'r') as file:
-            content = file.read()
-        return content
+        with open(path, 'r', encoding='utf-8', errors='replace') as file:
+            lines = file.readlines()
+    
+        # Add line numbers in the specified format
+        numbered_lines = [f"(~{i+1}~) {line.rstrip()}" for i, line in enumerate(lines)]
+        
+        # Join the numbered lines back into a single string
+        content_with_numbers = "\n".join(numbered_lines)
+    
+        return content_with_numbers
     
     def __validate_file_path(self, path):
             """Validate the file path.
@@ -93,6 +100,9 @@ class CodeFileExtractor(ABC):
             """
             if not os.path.exists(path):
                 raise ValueError(f"File at path {path} does not exist.")
+            
+            if not os.path.isfile(path):
+                raise ValueError(f"Path {path} is not a file.")
             
             # Check if the file has a valid extension
             valid_extensions = self.get_valid_extensions()
