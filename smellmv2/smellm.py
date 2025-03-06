@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".")))
 import config.constants as constants
 from process_args.process_file import ProcessFile
 from process_args.process_zipfile import ProcessZipFile
+from process_args.process_folder import ProcessFolder
 
 class SmeLLM:
     def __init__(self):
@@ -80,7 +81,7 @@ class SmeLLM:
             ProcessFile(args.file, args.lang)
         elif args.folder:
             print(f"Processing folder: {args.folder}")
-            # TODO: Add folder processing logic
+            ProcessFolder(args.folder, args.lang)
         elif args.zipfile:
             print(f"Processing ZIP file: {args.zipfile}")
             ProcessZipFile(args.zipfile, args.lang)

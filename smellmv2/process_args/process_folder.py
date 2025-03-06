@@ -8,7 +8,7 @@ from content_extractors.typescript.typescript_file_extractor import TypeScriptFi
 from chat_apis.prompt_engineering import Prompt
 from chat_apis.oai.oai_apis import OAI
 
-class ProcessZipFile():
+class ProcessFolder():
     def __init__(self, file_path, file_type, model_name="gpt-4o-mini"):
         self.model_name = model_name
         self.conversation_histories = []
@@ -20,11 +20,11 @@ class ProcessZipFile():
             case _:
                 raise ValueError(f"Invalid file type: {file_type}")
         try:
-            zipfile_content = self.file_extractor.extract_content_zip_files(file_path)
+            folder_content = self.file_extractor.extract_folder_files(file_path)
         except Exception as e:
-            raise ValueError(f"Error in extracting zipfile: {e}")
+            raise ValueError(f"Error in extracting folder: {e}")
         try:
-            for relative_path, file_content in zipfile_content.items():
+            for relative_path, file_content in folder_content.items():
                 formatted_user_input = f"{relative_path} : {file_content}"
                 prompt_generator = Prompt(formatted_user_input)
                 self.conversation_histories.append(prompt_generator.get_conversation_start())

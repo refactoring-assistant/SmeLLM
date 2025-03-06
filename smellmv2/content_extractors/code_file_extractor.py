@@ -6,9 +6,6 @@ from abc import ABC, abstractmethod
 
 class CodeFileExtractor(ABC):
     """Base class for all code file extractors."""
-    def __init__(self):
-        self.extracted_path = None
-    
     def extract_content_single_file(self, path):
         """Extract the content of a single code file.
         
@@ -23,6 +20,18 @@ class CodeFileExtractor(ABC):
         
         return self.__extract_single_file(path)
     
+    def extract_folder_files(self, path):
+        """Extract the content of all code files in a folder.
+        
+        Args:
+            path (str): Path to the folder.
+            
+        Returns:
+            dict: Dictionary where keys are file paths and values are file contents.
+        """
+        return self.__extract_directory(path)
+        
+    
     def extract_content_zip_files(self, path):
         """Extract the content of all code files in a zip file.
         
@@ -34,31 +43,12 @@ class CodeFileExtractor(ABC):
         """
         # Extract the zip file
         try:
-            self.extracted_path = self.__extract_zip_file(path)
+            extracted_path = self.__extract_zip_file(path)
         except Exception as e:
             raise ValueError(f"Error extracting zip file at path {path}: {e}")
-        
-        content_dict = {}
-        for root, _, files in os.walk(self.extracted_path):
-            for file in files:
-                file_path = os.path.join(root, file)
-                if not self.__validate_file_path(file_path):
-                    continue
-                content = self.__extract_single_file(file_path)
-                relative_path = os.path.relpath(file_path, self.extracted_path)
-                content_dict[relative_path] = content
-        
-        return content_dict
-    
-    def cleanup_extracted_files(self):
-        """Delete the extracted files from a zip file.
-        
-        Args:
-            path (str): Path to the extracted directory.
-        """
-        if not self.extracted_path:
-            raise ValueError("No extracted files to clean up.")
-        shutil.rmtree(self.extracted_path)
+        content = self.__extract_directory(extracted_path)
+        shutil.rmtree(extracted_path)
+        return content
         
     @abstractmethod
     def get_valid_extensions(self):
@@ -130,4 +120,20 @@ class CodeFileExtractor(ABC):
         
         return temp_dir
     
+    def __extract_directory(self, dir_path):
+        if not os.path.exists(dir_path):
+            raise ValueError(f"Directory at path {dir_path} does not exist.")
+        if not os.path.isdir(dir_path):
+            raise ValueError(f"Path {dir_path} is not a directory.")
+        
+        content_dict = {}
+        for root, _, files in os.walk(dir_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                if not self.__validate_file_path(file_path):
+                    continue
+                content = self.__extract_single_file(file_path)
+                relative_path = os.path.relpath(file_path, dir_path)
+                content_dict[relative_path] = content
+        return content_dict
    

@@ -25,6 +25,7 @@ if __name__ == '__main__':
     pythonpath = r'trial-files\interface_chat_api.py'
     legalpath = r'trial-files\DataClassBadExample.ts'
     zipfile = r'trial-files\trialfiles.zip'
+    folderpath = r'trial-files'
     try:
         content = tsfe.extract_content_single_file(illegalpath)
     except Exception as e:
@@ -45,10 +46,13 @@ if __name__ == '__main__':
         print("Extracting zip file for TypeScript files")
         content_dict = tsfe.extract_content_zip_files(zipfile)
         print(content_dict)
-        try:
-            tsfe.cleanup_extracted_files()
-        except Exception as e:
-            print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+    
+    try:
+        print("Extracting folder for TypeScript files")
+        content_dict = tsfe.extract_folder_files(folderpath)
+        print(content_dict)
     except Exception as e:
         print(f"Error: {e}")
         
