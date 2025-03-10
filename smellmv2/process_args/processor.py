@@ -8,11 +8,17 @@ from content_extractors.java.java_file_extractor import JavaFileExtractor
 from content_extractors.typescript.typescript_file_extractor import TypeScriptFileExtractor
 from chat_apis.prompt_engineering import Prompt
 from chat_apis.oai.oai_apis import OAI
+from utils.config_util import get_model_details
 
 
 class Processor(ABC):
     def __init__(self, file_path, file_type, model_name="gpt-4o-mini"):
         self.model_name = model_name
+        # TODO: Cleanup this part because model details accessed many places.
+        model_details = get_model_details(self.model_name)
+        if not model_details:
+            raise ValueError(f"Model details not found for model: {self.model_name}")
+        self.api_type = model_details.get("api_provider")
         self.conversation_histories = []
         self.relative_paths = []
         match file_type:
@@ -32,12 +38,14 @@ class Processor(ABC):
                 formatted_user_input = f"{relative_path} : {file_content}"
                 prompt_generator = Prompt(formatted_user_input)
                 self.conversation_histories.append(prompt_generator.get_conversation_start())
+                
         except Exception as e:
             raise ValueError(f"Error in generating prompts: {e}")
     
-    def process(self, api="OAI"):
+    def process(self):
+        
         try:  
-            match api:
+            match self.api_type:
                 case "OAI":
                     oai = OAI(self.model_name)
                     response_dict = {}
@@ -46,7 +54,7 @@ class Processor(ABC):
                         response_dict[self.relative_paths[conversation_index]] = response
                     return response_dict
                 case _:
-                    raise ValueError(f"Invalid API type: {api}")
+                    raise ValueError(f"Invalid API type: {self.api_type}")
             
         except Exception as e:
             raise ValueError(f"Error: {e}")
