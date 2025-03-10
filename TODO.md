@@ -3,4 +3,4 @@
 - Add support for user to enter models they wish to run. - `DONE`
 - Add support for new API types (currently only OpenAI API is added).
 - Possibly add a UI (maybe streamlit) for user.
-- API Key through some cmd-line arg. If not then define in config.
+- API Key through some cmd-line arg. If not then define in config. - `DONE`

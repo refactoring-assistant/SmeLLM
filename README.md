@@ -18,6 +18,11 @@ In the `smellmv2/config` folder, create a .env file containing your OpenAI key i
 ```
 OAI_KEY=<your-key>
 ```
+Another way of setting your environment variable can be through a command line argument - set_env
+```bash
+python3 smellmv2\smellm.py --set_env <KEY=VALUE>
+```
+Here we enter `KEY` as `OAI_KEY` for OpenAI and `VALUE` as the value of the key to access the OpenAI API.
 
 **If you want to process a file**
 ```bash

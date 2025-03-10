@@ -10,6 +10,7 @@ from process_args.process_file import ProcessFile
 from process_args.process_zipfile import ProcessZipFile
 from process_args.process_folder import ProcessFolder
 from output.save_data import SaveData
+from utils.config_util import update_api_key
 
 class SmeLLM:
     def __init__(self):
@@ -24,6 +25,12 @@ class SmeLLM:
             "--list_models",
             action="store_true",
             help="List all available models"
+        )
+        self.parser.add_argument(
+            "--set_env",
+            type=str,
+            metavar="KEY=VALUE",
+            help="Set or update an environment variable in the .env file (format: KEY=VALUE)"
         )
         self.parser.add_argument(
             "--lang", 
@@ -54,6 +61,7 @@ class SmeLLM:
         help="(optional arg) Model to use for code smell detection (default: gpt-4o-mini)"
         )
         
+        
     def parse_arguments(self):
         """Parse command line arguments.
         
@@ -78,6 +86,10 @@ class SmeLLM:
         
         if args.list_models:
             self.__list_available_models()
+            sys.exit(0)
+        
+        if args.set_env:
+            self.__update_env_variable(args)
             sys.exit(0)
         
         self.__validate_args_paths(args)
@@ -196,6 +208,19 @@ class SmeLLM:
         if not os.path.exists(self.models_file_path):
             raise FileNotFoundError(f"Model configuration file not found at {self.models_file_path}")
 
+    def __update_env_variable(self, args):
+        if '=' not in args.set_env:
+            raise ValueError("Environment variable must be in the format KEY=VALUE")
+    
+        key, value = args.set_env.split('=', 1)
+        key = key.strip()
+        value = value.strip()
+        
+        if not key:
+            raise ValueError("Key cannot be empty")
+        
+        update_api_key(key, value)
+        
 # If the script is executed directly
 if __name__ == "__main__":
     smellm = SmeLLM()
