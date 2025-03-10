@@ -18,7 +18,9 @@ class CodeFileExtractor(ABC):
         if not self.__validate_file_path(path):
             raise ValueError(f"File at path {path} has an invalid extension. Expected one of: {', '.join(self.get_valid_extensions())}")
         
-        return self.__extract_single_file(path)
+        single_file_dict = {path : self.__extract_single_file(path)}
+        return single_file_dict
+         
     
     def extract_folder_files(self, path):
         """Extract the content of all code files in a folder.

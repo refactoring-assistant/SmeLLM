@@ -34,6 +34,16 @@ python3 smellmv2\smellm.py --lang <file-coding-language> --folder <folder-path>
 python3 smellmv2\smellm.py --lang <file-coding-language> --zipfile <zipfile-path>
 ```
 
+**If you want to check the list of models available to use**
+```bash
+python3 smellmv2\smellm.py --list_models
+```
+
+**If you want to process a file, folder or zipfile with a specific model**
+```bash
+python3 smellmv2\smellm.py --lang <file-coding-language> --[file, folder, zipfile] <path> --model <model-name>
+```
+
 **To get help on how to use the tool in terminal**
 
 ```bash

@@ -1,4 +1,4 @@
 {
-    "gpt-4o-mini": {"model_name": "gpt-4o-mini", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"},
+    "": {"model_name": "gpt-4o-mini", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"},
     "gpt-4o": {"model_name": "gpt-4o", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"}
 }
