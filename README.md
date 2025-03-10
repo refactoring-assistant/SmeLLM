@@ -58,13 +58,3 @@ python3 smellmv2\smellm.py --help
 ### Supported Languages
 - Java
 - TypeScript
-
-### Supported arguments for the tool
-1. --lang <language>: (*required*) to enable analysis based on a specific coding language. Supports entering one of the following:-
-    - java
-    - typescript
-2. Three options for the second argument (*required*):-
-    - --file <file-path>: Enter a file path to be processed.
-    - --folder <folder-path>: Enter a folder path to be processed.
-    - --zipfile <zipfile-path>: Enter a zipfile path to be processed.
-3. TODO: User model choice.
