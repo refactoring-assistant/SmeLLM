@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+import json
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".")))
 
@@ -13,17 +14,24 @@ from output.save_data import SaveData
 class SmeLLM:
     def __init__(self):
         """Initialize the SmeLLM class."""
+        self.models_file_path = constants.MODELS_LIST
+        self.__validate_model_path_exists()
         self.supported_languages = constants.SUPPORTED_LANGUAGES
         self.parser = argparse.ArgumentParser(
             description="SmeLLM: Detect code smells using Large Language Models"
         )
         self.parser.add_argument(
+            "--list_models",
+            action="store_true",
+            help="List all available models"
+        )
+        self.parser.add_argument(
             "--lang", 
             type=str, 
-            required=True,
+            required=False,
             help=f"Programming language (supported: {', '.join(self.supported_languages)})"
         )
-        self.group = self.parser.add_mutually_exclusive_group(required=True)
+        self.group = self.parser.add_mutually_exclusive_group(required=False)
         self.group.add_argument(
             "--file", 
             type=str,
@@ -56,6 +64,7 @@ class SmeLLM:
            - --folder: Path to a directory containing code files
            - --zipfile: Path to a ZIP archive containing code files
         3. --model (optional): Specifies the model to use for code smell detection
+        4. --list_models: Lists all available models (exits if this arg is called)
            
         Returns:
             argparse.Namespace: The parsed command line arguments
@@ -66,6 +75,10 @@ class SmeLLM:
         
         # Parse arguments
         args = self.parser.parse_args()
+        
+        if args.list_models:
+            self.__list_available_models()
+            sys.exit(0)
         
         self.__validate_args_paths(args)
             
@@ -80,13 +93,13 @@ class SmeLLM:
             
             if args.file:
                 print(f"Processing file: {args.file}")
-                processor = ProcessFile(args.file, args.lang)
+                processor = ProcessFile(args.file, args.lang, args.model)
             elif args.folder:
                 print(f"Processing folder: {args.folder}")
-                processor = ProcessFolder(args.folder, args.lang)
+                processor = ProcessFolder(args.folder, args.lang, args.model)
             elif args.zipfile:
                 print(f"Processing ZIP file: {args.zipfile}")
-                processor = ProcessZipFile(args.zipfile, args.lang)
+                processor = ProcessZipFile(args.zipfile, args.lang, args.model)
             
             processed_data = processor.process()
             
@@ -106,26 +119,82 @@ class SmeLLM:
             SystemExit: If the paths are invalid
         """
         # Validate language
+        
+        self.__validate_language_arg(args)
+        self.__validate_processing_input_args(args)
+        self.__validate_model_arg(args)
+            
+    def __validate_language_arg(self, args):
+        if not args.lang:
+            self.parser.error("Language argument is required")
         if args.lang not in self.supported_languages:
             self.parser.error(f"Unsupported language: {args.lang}. Supported languages are: {', '.join(self.supported_languages)}")
-        
+            
+    def __validate_processing_input_args(self, args):
+        if not any([args.file, args.folder, args.zipfile]):
+            self.parser.error("One of --file, --folder, or --zipfile is required")
         # Validate the paths and convert to absolute paths
         if args.file:
             args.file = os.path.abspath(args.file)
             if not os.path.isfile(args.file):
                 self.parser.error(f"File does not exist: {args.file}")
 
-        if args.folder:
+        elif args.folder:
             args.folder = os.path.abspath(args.folder)
             if not os.path.isdir(args.folder):
                 self.parser.error(f"Folder does not exist: {args.folder}")
 
-        if args.zipfile:
+        elif args.zipfile:
             args.zipfile = os.path.abspath(args.zipfile)
             if not os.path.isfile(args.zipfile):
                 self.parser.error(f"ZIP file does not exist: {args.zipfile}")
+                
+    def __validate_model_arg(self, args):
+        if args.model:
+        # Read and parse the JSON file
+            try:
+                with open(self.models_file_path, 'r') as f:
+                    models_config = json.load(f)
+                
+                # Check if the model_name exists in the loaded configuration
+                for model_key, model_data in models_config.items():
+                # Check if the model_name value matches the one we're looking for
+                    if model_data.get("model_name") == args.model:
+                        return
+                self.parser.error(f"Model Name not present in list: {args.model}")
+            except Exception as e:
+                self.parser.error(f"Error validating model: {args.model}")
+            
+    def __list_available_models(self):
+        """Display all available models and exit."""
         
-        # TODO: Add validation logic for models
+        try:
+            # Read and parse the JSON file
+            with open(self.models_file_path, 'r') as f:
+                models_config = json.load(f)
+            
+            print("Available models:")
+            print("-" * 40)
+            
+            # Sort models alphabetically for better display
+            model_names = [model_data.get("model_name") for _, model_data in models_config.items()]
+            
+            for i, model_name in enumerate(model_names, 1):
+                print(f"{i}. {model_name}")
+                
+            print("-" * 40)
+            print(f"Total available models: {len(model_names)}")
+        
+        except Exception as e:
+            print(f"Error listing models: {e}")
+            sys.exit(1)
+                
+    
+    def __validate_model_path_exists(self):
+        """Validate if the models file path exists."""
+        
+        if not os.path.exists(self.models_file_path):
+            raise FileNotFoundError(f"Model configuration file not found at {self.models_file_path}")
 
 # If the script is executed directly
 if __name__ == "__main__":

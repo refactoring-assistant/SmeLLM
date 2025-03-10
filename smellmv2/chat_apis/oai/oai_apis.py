@@ -15,7 +15,6 @@ class OAI(ChatAPI):
     """
     This class is responsible for handling the OpenAI API calls for the chat completion task.
     """
-    MODEL_FILE_NAME = 'oai_models.json'
     
     def __init__(self, model_name="gpt-4o-mini"):
         """
@@ -27,7 +26,7 @@ class OAI(ChatAPI):
         Raises:
             EnvironmentError: If the OAI_KEY environment variable is not found.
         """
-        if not self.__validate_model_name(model_name):
+        if not self.__validate_oai_model_name(model_name):
             raise ValueError(f"Model name {model_name} is not valid.")
         self.model_name = model_name
         self.OAI_KEY = os.getenv("OAI_KEY")
@@ -108,7 +107,7 @@ class OAI(ChatAPI):
         if len(conversations_history) < 2:
             raise ValueError("conversations_history must contain at least two messages")
         
-    def __validate_model_name(self, model_name):
+    def __validate_oai_model_name(self, model_name):
         """
         Validate if the provided model name exists in oai_models.json.
         
@@ -121,8 +120,7 @@ class OAI(ChatAPI):
         Raises:
             FileNotFoundError: If the oai_models.json file does not exist.
         """
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        models_file_path = os.path.join(current_dir, self.MODEL_FILE_NAME)
+        models_file_path = constants.MODELS_LIST
         
         # Check if the file exists
         if not os.path.exists(models_file_path):
@@ -135,7 +133,7 @@ class OAI(ChatAPI):
         # Check if the model_name exists in the loaded configuration
         for model_key, model_data in models_config.items():
         # Check if the model_name value matches the one we're looking for
-            if model_data.get("model_name") == model_name:
+            if model_data.get("model_name") == model_name and model_data.get("api_provider") == "OAI":
                 return True
                 
         return False

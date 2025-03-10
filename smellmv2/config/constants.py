@@ -1,10 +1,12 @@
 import os  # Import the os module
 
 # Get the directory path of the current file
-DEFAULT_PATH = os.path.dirname(__file__)
+CONFIG_DEFAULT_PATH = os.path.dirname(__file__)
 
 # Create the full path to the .env file in the same directory
-ENV_PATH = os.path.join(DEFAULT_PATH, '.env')
+ENV_PATH = os.path.join(CONFIG_DEFAULT_PATH, '.env')
+
+MODELS_LIST = os.path.join(CONFIG_DEFAULT_PATH, 'models_list.json')
 
 JAVA_FILE_EXTENSIONS = ['.java']  # Define the Java file extension
 TYPESCRIPT_FILE_EXTENSIONS = ['.ts', '.tsx']  # Define the TypeScript file extension
