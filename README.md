@@ -49,6 +49,11 @@ python3 smellmv2\smellm.py --list_models
 python3 smellmv2\smellm.py --lang <file-coding-language> --[file, folder, zipfile] <path> --model <model-name>
 ```
 
+**If you want to save to a particular directory**
+```bash
+python3 smellmv2\smellm.py --lang <file-coding-language> --[file, folder, zipfile] <path> --output <dir-path>
+```
+
 **To get help on how to use the tool in terminal**
 
 ```bash
