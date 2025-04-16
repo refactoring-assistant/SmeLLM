@@ -1,2 +1,5 @@
 openai==1.65.3
 python-dotenv==1.0.1
+RapidFuzz==3.13.0
+pandas==2.2.3
+openpyxl==3.1.5

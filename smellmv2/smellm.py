@@ -11,6 +11,7 @@ from process_args.process_zipfile import ProcessZipFile
 from process_args.process_folder import ProcessFolder
 from output.save_data import SaveData
 from utils.config_util import update_api_key
+from content_extractors.output_match_code_smell_extractor import OutputSmellExtractor
 
 class SmeLLM:
     def __init__(self):
@@ -66,6 +67,12 @@ class SmeLLM:
             default=None,  # Default Path
             help="(optional arg) Path to save the output files"
         )
+        self.parser.add_argument(
+            "--test",
+            type=str,
+            default=None,  # Default Path
+            help="(optional arg) Path to test CSV file"
+        )
         
         
     def parse_arguments(self):
@@ -106,8 +113,19 @@ class SmeLLM:
             save_data = SaveData(args.output)
             saved_dir = save_data.save_file(processed_data)
             print(f"Processed data saved to: {saved_dir}")
+
+            if args.test:
+               self.__test_output(args, saved_dir)
+            
         except Exception as e:
             print(f"Error: {e}")
+
+    def __test_output(self, args, saved_dir):
+
+        print(f"Test data: {args.test}")
+        code_smell_extractor = OutputSmellExtractor(saved_dir, constants.CODE_SMELLS)
+        detected_code_smells = code_smell_extractor.process_documents()
+        print(detected_code_smells)
             
     def __validate_args_paths(self, args):
         """Validate the paths provided in the arguments.
