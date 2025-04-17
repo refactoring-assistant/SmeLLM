@@ -11,6 +11,10 @@ from content_extractors.test_file_handler_excel import ExcelTestHandler
 
 class TestOutput:
     def __init__(self, output_dir_path, test_file_path):
+        if output_dir_path is None:
+            print('Output directory path is None. Please provide a valid output directory path.')
+        if test_file_path is None:
+            print('Test file path is None. Please provide a valid test file path.')
         self.code_smell_extractor = OutputSmellExtractor(output_dir_path, constants.CODE_SMELLS)
         self.test_file_handler = ExcelTestHandler(test_file_path)
         self.tp = 0
@@ -45,8 +49,14 @@ class TestOutput:
     
     def __merge_dataframes(self, df1, df2):
         # Merge two DataFrames on 'File Name' column
-        merged_df = pd.merge(df1, df2, on='File Name', how='inner')
-        return merged_df
+        try:
+            merged_df = pd.merge(df1, df2, on='File Name', how='inner')
+            merged_df['Expected Code Smells'] = merged_df['Expected Code Smells'].apply(self.__format_row_smell)
+            merged_df['Detected Code Smells'] = merged_df['Detected Code Smells'].apply(self.__format_row_smell)
+            return merged_df
+        except KeyError as e:
+            print(f"KeyError: {e}. Please check the column names in the DataFrames.")
+            return exit(1)
     
     def __calculate_conf_matrix_vals(self):
         precision = self.tp/(self.tp + self.fp) if (self.tp + self.fp) > 0 else 0
@@ -61,8 +71,8 @@ class TestOutput:
         return result_df
         
     def __count_tp(self, row):
-        expected_smells = self.__format_row_smell(row['Expected Code Smells'])
-        detected_smells = self.__format_row_smell(row['Detected Code Smells'])
+        expected_smells = row['Expected Code Smells']
+        detected_smells = row['Detected Code Smells']
         
         # Find intersection
         if isinstance(expected_smells, list) and isinstance(detected_smells, list):
@@ -71,8 +81,8 @@ class TestOutput:
             return 0
         
     def __count_fp(self, row):
-        expected_smells = self.__format_row_smell(row['Expected Code Smells'])
-        detected_smells = self.__format_row_smell(row['Detected Code Smells'])
+        expected_smells = row['Expected Code Smells']
+        detected_smells = row['Detected Code Smells']
         
         # Find false positives using set subtraction
         if isinstance(expected_smells, list) and isinstance(detected_smells, list):
@@ -81,8 +91,8 @@ class TestOutput:
             return 0
         
     def __count_fn(self, row):
-        expected_smells = self.__format_row_smell(row['Expected Code Smells'])
-        detected_smells = self.__format_row_smell(row['Detected Code Smells'])
+        expected_smells = row['Expected Code Smells']
+        detected_smells = row['Detected Code Smells']
         
         # Find false positives using set subtraction
         if isinstance(expected_smells, list) and isinstance(detected_smells, list):
@@ -91,8 +101,8 @@ class TestOutput:
             return 0
         
     def __count_tn(self, row):
-        expected_smells = self.__format_row_smell(row['Expected Code Smells'])
-        detected_smells = self.__format_row_smell(row['Detected Code Smells'])
+        expected_smells = row['Expected Code Smells']
+        detected_smells = row['Detected Code Smells']
 
         if isinstance(expected_smells, list) and isinstance(detected_smells, list):
             if len(expected_smells) == 0 and len(detected_smells) == 0:

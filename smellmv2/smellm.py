@@ -10,6 +10,7 @@ from process_args.process_file import ProcessFile
 from process_args.process_zipfile import ProcessZipFile
 from process_args.process_folder import ProcessFolder
 from output.save_data import SaveData
+from output.test_output import TestOutput
 from utils.config_util import update_api_key
 from content_extractors.output_match_code_smell_extractor import OutputSmellExtractor
 
@@ -71,7 +72,7 @@ class SmeLLM:
             "--test",
             type=str,
             default=None,  # Default Path
-            help="(optional arg) Path to test CSV file"
+            help="(optional arg) Path to test Excel file"
         )
         
         
@@ -115,7 +116,8 @@ class SmeLLM:
             print(f"Processed data saved to: {saved_dir}")
 
             if args.test:
-               self.__test_output(args, saved_dir)
+               tester = TestOutput(saved_dir, args.test)
+               tester.test()
             
         except Exception as e:
             print(f"Error: {e}")

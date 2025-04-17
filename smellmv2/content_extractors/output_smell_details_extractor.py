@@ -11,7 +11,7 @@ class OutputSmellExtractor():
         self.output_path = output_path
         self.smell_data = code_smells
 
-    def match_with_smell_list(self, extracted_smells, threshold=90):
+    def match_with_smell_list(self, extracted_smells, threshold=70):
 
         matched_smells = set()
         
@@ -48,7 +48,7 @@ class OutputSmellExtractor():
                     main_file_name = file_name.split('_')[-1]
                     code_smells = [match.strip() for match in matches]
 
-                    detected_code_smells[main_file_name] = self.match_with_smell_list(code_smells, threshold=90)
+                    detected_code_smells[main_file_name] = self.match_with_smell_list(code_smells, threshold=70)
         return detected_code_smells
     
 

@@ -11,3 +11,4 @@ output-*
 *.log
 *.zip
 java_single_file_code_smells/
+test_output/
