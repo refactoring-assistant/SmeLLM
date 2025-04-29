@@ -10,7 +10,9 @@ from process_args.process_file import ProcessFile
 from process_args.process_zipfile import ProcessZipFile
 from process_args.process_folder import ProcessFolder
 from output.save_data import SaveData
+from output.test_output import TestOutput
 from utils.config_util import update_api_key
+from content_extractors.output_match_code_smell_extractor import OutputSmellExtractor
 
 class SmeLLM:
     def __init__(self):
@@ -55,33 +57,27 @@ class SmeLLM:
             help="Path to a ZIP archive containing code files"
         )
         self.parser.add_argument(
-        "--model",
-        type=str,
-        default="gpt-4o-mini",  # Default model
-        help="(optional arg) Model to use for code smell detection (default: gpt-4o-mini)"
+            "--model",
+            type=str,
+            default="gpt-4o-mini",  # Default model
+            help="(optional arg) Model to use for code smell detection (default: gpt-4o-mini)"
+        )
+        self.parser.add_argument(
+            "--output",
+            type=str,
+            default=None,  # Default Path
+            help="(optional arg) Path to save the output files"
+        )
+        self.parser.add_argument(
+            "--test",
+            type=str,
+            default=None,  # Default Path
+            help="(optional arg) Path to test Excel file"
         )
         
         
     def parse_arguments(self):
-        """Parse command line arguments.
-        
-        The method accepts:
-        1. --lang (required): Specifies the programming language
-        2. One of the following (required):
-           - --file: Path to a single file
-           - --folder: Path to a directory containing code files
-           - --zipfile: Path to a ZIP archive containing code files
-        3. --model (optional): Specifies the model to use for code smell detection
-        4. --list_models: Lists all available models (exits if this arg is called)
-           
-        Returns:
-            argparse.Namespace: The parsed command line arguments
-            
-        Raises:
-            SystemExit: If arguments are invalid or help is requested
-        """
-        
-        # Parse arguments
+ 
         args = self.parser.parse_args()
         
         if args.list_models:
@@ -115,11 +111,23 @@ class SmeLLM:
             
             processed_data = processor.process()
             
-            save_data = SaveData()
+            save_data = SaveData(args.output)
             saved_dir = save_data.save_file(processed_data)
             print(f"Processed data saved to: {saved_dir}")
+
+            if args.test:
+               tester = TestOutput(saved_dir, args.test)
+               tester.test()
+            
         except Exception as e:
             print(f"Error: {e}")
+
+    def __test_output(self, args, saved_dir):
+
+        print(f"Test data: {args.test}")
+        code_smell_extractor = OutputSmellExtractor(saved_dir, constants.CODE_SMELLS)
+        detected_code_smells = code_smell_extractor.process_documents()
+        print(detected_code_smells)
             
     def __validate_args_paths(self, args):
         """Validate the paths provided in the arguments.

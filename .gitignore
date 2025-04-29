@@ -4,3 +4,8 @@ trial-files/
 __pycache__/
 *.pyc
 output-*
+*.iml
+*.idea
+*.DS_Store
+*.ipynb_checkpoints
+*.log

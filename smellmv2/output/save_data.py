@@ -1,16 +1,11 @@
 import os
 import datetime
 class SaveData():
-    def __init__(self):
-        curr_dir = os.path.dirname(__file__)
-        
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        
-        # Create the output directory name
-        output_dir_name = f"output-{timestamp}"
-        
-        # Create the full path for the output directory
-        self.output_dir_path = os.path.join(curr_dir, output_dir_name)
+    def __init__(self, output_path=None):
+        if output_path is not None:
+            self.output_dir_path = output_path
+        else:
+            self.__create_output_dir()
         if not os.path.exists(self.output_dir_path):
             os.makedirs(self.output_dir_path)
             print(f"Created output directory: {self.output_dir_path}")
@@ -37,3 +32,17 @@ class SaveData():
             print(f"Saved data to {file_path}")
         
         return self.output_dir_path
+    
+    def __create_output_dir(self):
+        curr_dir = os.path.dirname(__file__)
+        
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        
+        # Create the output directory name
+        output_dir_name = f"output-{timestamp}"
+        
+        # Create the full path for the output directory
+        self.output_dir_path = os.path.join(curr_dir, output_dir_name)
+        if not os.path.exists(self.output_dir_path):
+            os.makedirs(self.output_dir_path)
+            print(f"Created output directory: {self.output_dir_path}")

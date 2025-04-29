@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from abc import ABC, abstractmethod
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
@@ -35,7 +36,9 @@ class Processor(ABC):
         try:
             for relative_path, file_content in zipfile_content.items():
                 self.relative_paths.append(relative_path)
-                formatted_user_input = f"{relative_path} : {file_content}"
+                file_paths = relative_path.split("\\")
+                file_name = file_paths[-1]
+                formatted_user_input = f"{file_name} : {file_content}"
                 prompt_generator = Prompt(formatted_user_input)
                 self.conversation_histories.append(prompt_generator.get_conversation_start())
                 
@@ -43,21 +46,26 @@ class Processor(ABC):
             raise ValueError(f"Error in generating prompts: {e}")
     
     def process(self):
-        
+        start_time = time.time()
         try:  
             match self.api_type:
                 case "OAI":
                     oai = OAI(self.model_name)
                     response_dict = {}
                     for conversation_index in range(len(self.conversation_histories)):
+                        print(f"Processing file {conversation_index + 1}: {self.relative_paths[conversation_index]}")
                         response = oai.chat_completion(conversations_history=self.conversation_histories[conversation_index])
                         response_dict[self.relative_paths[conversation_index]] = response
+                    print(f"Processed {len(self.relative_paths)} files")
                     return response_dict
                 case _:
                     raise ValueError(f"Invalid API type: {self.api_type}")
             
         except Exception as e:
             raise ValueError(f"Error: {e}")
+        finally:
+            end_time = time.time()
+            print(f"Time taken: {end_time - start_time:.2f} seconds")
         
     @abstractmethod
     def content_extraction(self, file_path):
