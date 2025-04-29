@@ -1,4 +1,5 @@
 {
     "gpt-4o-mini": {"model_name": "gpt-4o-mini", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"},
-    "gpt-4o": {"model_name": "gpt-4o", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"}
+    "gpt-4o": {"model_name": "gpt-4o", "input_context_size": 128000, "output_context_size":16384, "api_provider": "OAI"},
+    "gpt-4.1-nano": {"model_name": "gpt-4.1-nano", "input_context_size": 1047576, "output_context_size":32768, "api_provider": "OAI"}
 }
