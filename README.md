@@ -73,6 +73,9 @@ python3 smellmv2\smellm.py --lang <file-coding-language> --[file, folder, zipfil
 | File Name 1 | [List of code smells in file 1] |
 | File Name 2 | [List of code smells in file 2] |
 
+**A template excel file is provided as `TEST.xlsx`**
+- Keep the file name without extension.
+
 ### Supported Languages
 - Java
 - TypeScript
