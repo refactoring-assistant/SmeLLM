@@ -21,7 +21,7 @@ class ExcelTestHandler:
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    def save_test(self, save_data_frame, result_df):
+    def save_test(self, save_data_frame, result_df, individual_code_smell_df):
         """
         Save the given DataFrame to the same Excel file.
         """
@@ -29,6 +29,7 @@ class ExcelTestHandler:
             with pd.ExcelWriter(self.file_path, engine='openpyxl', mode='w') as writer:
                 save_data_frame.to_excel(writer, sheet_name="code_smells", index=False)
                 result_df.to_excel(writer, sheet_name="results", index=False)
+                individual_code_smell_df.to_excel(writer, sheet_name="individual_code_smells", index=False)
             print(f"DataFrame saved successfully to {self.file_path}")
         except Exception as e:
             print(f"An error occurred while saving to Excel: {e}")
