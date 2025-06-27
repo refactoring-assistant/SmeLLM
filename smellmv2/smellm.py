@@ -110,6 +110,7 @@ class SmeLLM:
                 processor = ProcessZipFile(args.zipfile, args.lang, args.model)
             
             processed_data = processor.process()
+            time_taken = processor.calculate_time_stats()
             
             save_data = SaveData(args.output)
             saved_dir = save_data.save_file(processed_data)
@@ -119,6 +120,7 @@ class SmeLLM:
                tester = TestOutput(saved_dir, args.test)
                tester.test()
             
+            print(f"Time taken for API processing: {time_taken['average_time']:.2f} seconds (avg), \n{time_taken['max_time']:.2f} seconds (max), \n{time_taken['min_time']:.2f} seconds (min), \n{time_taken['median_time']:.2f} seconds (median)")
         except Exception as e:
             print(f"Error: {e}")
 
