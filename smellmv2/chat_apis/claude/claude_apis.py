@@ -170,7 +170,7 @@ class ANTHROPIC(ChatAPI):
             request = Request(
                 custom_id=safe_custom_id,
                 params=MessageCreateParamsNonStreaming(
-                    model="claude-opus-4-20250514",
+                    model=self.model_name,
                     max_tokens=1024,
                     system=batch_conversations_list[i][0].get("content"),
                     messages=[batch_conversations_list[i][1]]
