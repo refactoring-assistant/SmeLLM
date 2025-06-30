@@ -22,6 +22,7 @@ class Processor(ABC):
         if not model_details:
             raise ValueError(f"Model details not found for model: {self.model_name}")
         self.api_type = model_details.get("api_provider")
+        self.batch_possible = model_details.get("batch_possible", False)
         self.conversation_histories = []
         self.relative_paths = []
         self.file_time = []
@@ -58,8 +59,10 @@ class Processor(ABC):
                     client = ANTHROPIC(self.model_name)
                 case _:
                     raise ValueError(f"Invalid API type: {self.api_type}")
-                
-            response_dict = self.__process_input(client)
+            if self.batch_possible and len(self.conversation_histories) > 1:
+                response_dict = self.__process_batch_input(client)
+            else:
+                response_dict = self.__process_input(client)
             return response_dict
         except Exception as e:
             raise ValueError(f"Error: {e}")
@@ -95,6 +98,17 @@ class Processor(ABC):
             file_time = file_end_time - file_start_time
             self.file_time.append(file_time)
         print(f"Processed {len(self.relative_paths)} files")
+        print(self.calculate_time_stats())
+        return response_dict
+    
+    def __process_batch_input(self, client):
+        response_dict = {}
+        batch_start_time = time.time()
+        response_dict = client.batch_chat_completion(file_names=self.relative_paths, batch_conversations_list=self.conversation_histories)
+        batch_end_time = time.time()
+        batch_time = batch_end_time - batch_start_time
+        print(f"Processed {len(self.relative_paths)} files")
+        print(f"Batch processing time: {batch_time:.2f} seconds")
         return response_dict
         
     @abstractmethod
