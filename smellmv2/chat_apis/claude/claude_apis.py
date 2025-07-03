@@ -24,7 +24,7 @@ class ANTHROPIC(ChatAPI):
         if not self.__validate_anthropic_model_name(model_name):
             raise ValueError(f"Model name {model_name} is not valid.")
         self.model_name = model_name
-        self.max_tokens = 2048
+        # max tokens set in validation function
         self.CLAUDE_KEY = os.getenv("CLAUDE_KEY")
         if not self.CLAUDE_KEY:
             raise EnvironmentError("CLAUDE_KEY environment variable not found")
@@ -132,11 +132,63 @@ class ANTHROPIC(ChatAPI):
         for model_key, model_data in models_config.items():
         # Check if the model_name value matches the one we're looking for
             if model_data.get("model_name") == model_name and model_data.get("api_provider") == "ANTHROPIC":
-                self.max_tokens = model_data.get("input_context_size", 1000)
+                self.max_tokens = model_data.get("output_context_size")
                 return True
                 
         return False
     
+    def __create_batch_request(self, file_names, batch_conversations_list):
+        requests = []
+        self.custom_id_to_filename = {}  # Reset mapping for new batch
+        
+        for i in range(len(file_names)):
+            # Create safe custom ID and store mapping
+            safe_custom_id = self.__create_safe_custom_id(file_names[i], i)
+            self.custom_id_to_filename[safe_custom_id] = file_names[i]
+            
+            request = Request(
+                custom_id=safe_custom_id,
+                params=MessageCreateParamsNonStreaming(
+                    model=self.model_name,
+                    max_tokens=self.max_tokens,
+                    system=batch_conversations_list[i][0].get("content"),
+                    messages=[batch_conversations_list[i][1]]
+                )
+            )
+            requests.append(request)
+        
+        return self.anthropic_client.messages.batches.create(requests=requests)
+    
+    def __get_batch_results(self, message_batch):
+        try:
+            results = self.anthropic_client.messages.batches.results(message_batch.id)
+            filename_to_content = {}
+        
+            for i, result in enumerate(results, 1):            
+                # Extract custom_id
+                custom_id = getattr(result, 'custom_id', 'Unknown')
+                
+                # Get original filename from custom_id
+                original_filename = self.__get_filename_from_custom_id(custom_id)
+                
+                # Extract result type
+                if hasattr(result, 'result'):
+                    message = result.result.message
+                    
+                    # Extract content from message
+                    if hasattr(message, 'content') and message.content:
+                        content = message.content[0].text
+                        if original_filename:
+                            filename_to_content[original_filename] = content
+                        else:
+                            print(f"Warning: Could not map custom_id {custom_id} to filename")
+
+            return filename_to_content
+            
+        except Exception as e:
+            print(f"Error retrieving batch results: {e}")
+            exit(1)
+
     def __create_safe_custom_id(self, filename, index):
         """
         Create a safe custom ID from filename by removing/replacing invalid characters
@@ -157,60 +209,8 @@ class ANTHROPIC(ChatAPI):
             safe_id = safe_id[:47] + f"_{index}"
         
         return safe_id
-    
-    def __create_batch_request(self, file_names, batch_conversations_list):
-        requests = []
-        self.custom_id_to_filename = {}  # Reset mapping for new batch
-        
-        for i in range(len(file_names)):
-            # Create safe custom ID and store mapping
-            safe_custom_id = self.__create_safe_custom_id(file_names[i], i)
-            self.custom_id_to_filename[safe_custom_id] = file_names[i]
-            
-            request = Request(
-                custom_id=safe_custom_id,
-                params=MessageCreateParamsNonStreaming(
-                    model=self.model_name,
-                    max_tokens=1024,
-                    system=batch_conversations_list[i][0].get("content"),
-                    messages=[batch_conversations_list[i][1]]
-                )
-            )
-            requests.append(request)
-        
-        return self.anthropic_client.messages.batches.create(requests=requests)
-    
-    def __get_batch_results(self, message_batch):
-        try:
-            results = self.anthropic_client.messages.batches.results(message_batch.id)
-            filename_to_content = {}
-        
-            for i, result in enumerate(results, 1):            
-                # Extract custom_id
-                custom_id = getattr(result, 'custom_id', 'Unknown')
-                
-                # Get original filename from custom_id
-                original_filename = self.get_filename_from_custom_id(custom_id)
-                
-                # Extract result type
-                if hasattr(result, 'result'):
-                    message = result.result.message
-                    
-                    # Extract content from message
-                    if hasattr(message, 'content') and message.content:
-                        content = message.content[0].text
-                        if original_filename:
-                            filename_to_content[original_filename] = content
-                        else:
-                            print(f"Warning: Could not map custom_id {custom_id} to filename")
 
-            return filename_to_content
-            
-        except Exception as e:
-            print(f"Error retrieving batch results: {e}")
-            exit(1)
-    
-    def get_filename_from_custom_id(self, custom_id):
+    def __get_filename_from_custom_id(self, custom_id):
         """
         Retrieve the original filename from a custom ID
         """
