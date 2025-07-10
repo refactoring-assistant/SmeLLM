@@ -9,3 +9,6 @@ output-*
 *.DS_Store
 *.ipynb_checkpoints
 *.log
+test_results/
+test_output/
+recent_test_results.zip
