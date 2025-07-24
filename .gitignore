@@ -12,3 +12,4 @@ output-*
 test_results/
 test_output/
 recent_test_results.zip
+.venv
