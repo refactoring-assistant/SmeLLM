@@ -20,7 +20,7 @@ class Prompt():
     
     def __create_prompts(self, user_input):
         self.system_prompt = {"role": "system", "content": constants.SYSTEM_PROMPT}
-        self.user_prompt = {"role": "user", "content": constants.USER_PROMPT + user_input}
+        self.user_prompt = {"role": "user", "content": constants.COT_USER_PROMPT + user_input}
             
 
 if __name__ == '__main__':
