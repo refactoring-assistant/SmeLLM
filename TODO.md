@@ -3,3 +3,7 @@
 - Add support for batch processing of OpenAI models with less batch context window.
 - Check and update batch processing for claude based on batch context window.
 - Clean up code made for batch processing.
+- Add the python version to be used.
+- File name extension in excel
+- CSV support for tests
+- Save according to folder information (same name file in two different folders in main folder)
