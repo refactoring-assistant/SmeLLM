@@ -60,7 +60,7 @@ class Processor(ABC):
                 case _:
                     raise ValueError(f"Invalid API type: {self.api_type}")
             if self.batch_possible and len(self.conversation_histories) > 1:
-                response_dict = self.__process_batch_input(client)
+                response_dict = self.__process_input(client)
             else:
                 response_dict = self.__process_input(client)
             return response_dict
