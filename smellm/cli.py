@@ -1,4 +1,5 @@
 import argparse
+import json
 
 import sys
 import os
@@ -52,7 +53,9 @@ def parse_arguments():
 
     :return: Parsed arguments containing language, model, and paths.
     """
-    parser = argparse.ArgumentParser(description="SmeLLM")
+    parser = argparse.ArgumentParser(
+        description="SmeLLM: Detect code smells using Large Language Models"
+    )
 
     parser.add_argument(
         "-l",
@@ -92,12 +95,20 @@ def parse_arguments():
         help="Set or update an environment variable in the .env file (format: KEY=VALUE)",
     )
 
+    parser.add_argument(
+        "-lm", "--list_models", action="store_true", help="List all available models"
+    )
+
     source_path = parser.add_mutually_exclusive_group(required=True)
     source_path.add_argument("--file-path", type=str, help="Path to a specific file.")
     source_path.add_argument("--folder-path", type=str, help="Path to a folder.")
     source_path.add_argument("--zip-path", type=str, help="Path to a zip archive.")
 
     args = parser.parse_args()
+
+    if args.list_models:
+        list_available_models()
+        sys.exit(0)
 
     validate_paths(args)
 
