@@ -4,6 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import tempfile
 from smellm.cli import validate_paths
+from smellm.utils.file_utils import read_json
 
 class Args:
     def __init__(self, file_path=None, folder_path=None, zip_path=None, eval=None):
@@ -50,3 +51,15 @@ def test_validate_paths_zip_not_exists():
         validate_paths(args)
     except SystemExit as e:
         assert str(e) == "Error: Zip file 'non_existent_file.zip' does not exist or is not a .zip file."
+
+def test_json_extract():
+    json_content = '{"key": "value"}'
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.json') as tmp:
+        tmp.write(json_content.encode('utf-8'))
+        tmp_path = tmp.name
+        
+    try:
+        data = read_json(tmp_path)
+        assert data == {"key": "value"}
+    finally:
+        os.remove(tmp_path)

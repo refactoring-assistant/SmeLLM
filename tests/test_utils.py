@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 import tempfile
 
-from smellm.utils import extract_file_content, extract_folder_content, extract_zip_content
+from smellm.utils.file_utils import extract_file_content, extract_folder_content, extract_zip_content
 
 def test_extract_file_content():
     with tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8') as tmpfile:
