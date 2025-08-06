@@ -37,10 +37,10 @@ class SmeLLM:
         self.parser.add_argument(
             "--lang", 
             type=str, 
-            required=False,
+            required=True,
             help=f"Programming language (supported: {', '.join(self.supported_languages)})"
         )
-        self.group = self.parser.add_mutually_exclusive_group(required=False)
+        self.group = self.parser.add_mutually_exclusive_group(required=True)
         self.group.add_argument(
             "--file", 
             type=str,

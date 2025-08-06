@@ -87,3 +87,6 @@ python3 smellmv2\smellm.py --lang <file-coding-language> --[file, folder, zipfil
 - `test_output/`: The folder containing output for all the code smells. (Was utilized to enable testing benchmarks)
 -  `.xlsx` files: The excel files with benchmark results for the code smells.
 - `.zip` files: The zip files containing the code smells for java.
+
+### Note:
+To enable batch processing for a model, ensure that the model supports batch processing by checking the `models_list.json` file in the `smellmv2/config` folder. Set the `batch_possible` attribute to `true` for the desired model.

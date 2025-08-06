@@ -40,8 +40,7 @@ class Processor(ABC):
         try:
             for relative_path, file_content in zipfile_content.items():
                 self.relative_paths.append(relative_path)
-                file_paths = relative_path.split("\\")
-                file_name = file_paths[-1]
+                file_name = os.path.basename(relative_path)
                 formatted_user_input = f"{file_name} : {file_content}"
                 prompt_generator = Prompt(user_input=formatted_user_input, prompt_format=self.api_type)
                 self.conversation_histories.append(prompt_generator.get_conversation_start())
