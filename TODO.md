@@ -3,3 +3,4 @@
 - Add support for batch processing of OpenAI models with less batch context window.
 - Check and update batch processing for claude based on batch context window.
 - Clean up code made for batch processing.
+- Add the python version to be used.
