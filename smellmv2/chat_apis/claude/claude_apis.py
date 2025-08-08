@@ -44,7 +44,8 @@ class ANTHROPIC(ChatAPI):
                 model=self.model_name,
                 max_tokens=self.max_tokens,
                 system=conversations_history[0].get("content"),
-                messages=conversations_history[1:]
+                messages=conversations_history[1:],
+                timeout=600.0
             )
         except Exception as e:
             raise ValueError(f"Error with Anthropic API: {e}")

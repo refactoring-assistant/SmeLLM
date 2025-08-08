@@ -59,8 +59,8 @@ class SmeLLM:
         self.parser.add_argument(
             "--model",
             type=str,
-            default="gpt-4o-mini",  # Default model
-            help="(optional arg) Model to use for code smell detection (default: gpt-4o-mini)"
+            default="gpt-4o-mini-2024-07-18",  # Default model
+            help="(optional arg) Model to use for code smell detection (default: gpt-4o-mini-2024-07-18)"
         )
         self.parser.add_argument(
             "--output",
