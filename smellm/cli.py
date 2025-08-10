@@ -4,8 +4,9 @@ import json
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import config.models
+from .config import models
+from .config.constants import LANGUAGE_EXTENSIONS
+from .config.code_smells import CODE_SMELLS
 
 
 def validate_paths(args):
@@ -61,15 +62,23 @@ def parse_arguments():
         "-l",
         "--language",
         help="Specify which language to use to filter files",
-        choices=["java", "typescript"],
+        choices=list(LANGUAGE_EXTENSIONS.keys()),
     )
 
     parser.add_argument(
         "-m",
         "--model",
         help="Specify the model to use for code smell detection",
-        choices=list(config.models.MODELS.keys()),
+        choices=[m["name"] for m in models.MODELS],
         required=True,
+    )
+
+    parser.add_argument(
+        '-fs',
+        '--few-shot',
+        help="Specify the code smell to use few-shot prompting for",
+        choices=[smell["id"] for smell in CODE_SMELLS],
+        required=False
     )
 
     parser.add_argument(
@@ -83,20 +92,12 @@ def parse_arguments():
         "-o",
         "--output",
         type=str,
-        default="./out/",
+        default="out/",
         help="(optional arg) Path to save the output files",
     )
 
     parser.add_argument(
-        "-se",
-        "--set_env",
-        type=str,
-        metavar="KEY=VALUE",
-        help="Set or update an environment variable in the .env file (format: KEY=VALUE)",
-    )
-
-    parser.add_argument(
-        "-lm", "--list_models", action="store_true", help="List all available models"
+        "-lm", "--list-models", action="store_true", help="List all available models"
     )
 
     source_path = parser.add_mutually_exclusive_group(required=True)
