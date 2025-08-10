@@ -3,8 +3,8 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import tempfile
-from smellm.cli import validate_paths
-from smellm.utils.file_utils import read_json
+from unittest import mock
+from smellm.cli import validate_paths, parse_arguments
 
 class Args:
     def __init__(self, file_path=None, folder_path=None, zip_path=None, eval=None):
@@ -52,14 +52,25 @@ def test_validate_paths_zip_not_exists():
     except SystemExit as e:
         assert str(e) == "Error: Zip file 'non_existent_file.zip' does not exist or is not a .zip file."
 
-def test_json_extract():
-    json_content = '{"key": "value"}'
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.json') as tmp:
-        tmp.write(json_content.encode('utf-8'))
+def test_parse_arguments_file_path():
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.java') as tmp:
         tmp_path = tmp.name
-        
-    try:
-        data = read_json(tmp_path)
-        assert data == {"key": "value"}
-    finally:
-        os.remove(tmp_path)
+        test_args = ["prog", "--file-path", tmp_path, "-m", "gpt-4o"]
+        with mock.patch.object(sys, "argv", test_args):
+            args = parse_arguments()
+            assert args.file_path == tmp_path
+
+def test_parse_arguments_folder_path():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        test_args = ["prog", "--folder-path", tmpdir, "-m", "gpt-4o"]
+        with mock.patch.object(sys, "argv", test_args):
+            args = parse_arguments()
+            assert args.folder_path == tmpdir
+
+def test_parse_arguments_zip_path():
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.zip') as tmp:
+        tmp_path = tmp.name
+        test_args = ["prog", "--zip-path", tmp_path, "-m", "gpt-4o"]
+        with mock.patch.object(sys, "argv", test_args):
+            args = parse_arguments()
+            assert args.zip_path == tmp_path
