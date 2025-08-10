@@ -1,0 +1,85 @@
+[
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "file_name": "source5.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      11,
+      15
+    ],
+    "file_name": "source4.java"
+  },
+  {
+    "code_smell": "Temporary Field",
+    "line_numbers": [
+      11
+    ],
+    "file_name": "source4.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      4
+    ],
+    "file_name": "source6.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      21
+    ],
+    "file_name": "source3.java"
+  },
+  {
+    "code_smell": "Comments",
+    "line_numbers": [
+      10,
+      13,
+      17
+    ],
+    "file_name": "source3.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      3
+    ],
+    "file_name": "source3.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "file_name": "source7.java"
+  }
+]

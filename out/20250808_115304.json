@@ -1,0 +1,80 @@
+[
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      13
+    ],
+    "file_name": "source4.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      8
+    ],
+    "file_name": "source7.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      2
+    ],
+    "file_name": "source7.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "file_name": "source5.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      28
+    ],
+    "file_name": "source3.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "file_name": "source6.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "file_name": "source6.java"
+  }
+]

@@ -1,0 +1,1034 @@
+[
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "file_name": "Speculative Generality/source62.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      4,
+      5,
+      6
+    ],
+    "file_name": "Speculative Generality/source63.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      7,
+      8,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      18,
+      19
+    ],
+    "file_name": "Comments/source4.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "file_name": "Feature Envy/source22.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      5
+    ],
+    "file_name": "Feature Envy/source22.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      19,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "file_name": "Comments/source3.java"
+  },
+  {
+    "code_smell": "Comments",
+    "line_numbers": [
+      18,
+      19,
+      21,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "file_name": "Comments/source3.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+    ],
+    "file_name": "Feature Envy/source21.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "file_name": "Feature Envy/source21.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "file_name": "Comments/source5.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "file_name": "Comments/source6.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      8
+    ],
+    "file_name": "Comments/source6.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      6,
+      7,
+      9,
+      10,
+      11
+    ],
+    "file_name": "Comments/source7.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      1,
+      2,
+      3
+    ],
+    "file_name": "Comments/source7.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      76,
+      77,
+      78,
+      80,
+      81,
+      82,
+      84,
+      85,
+      86,
+      87,
+      88,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100
+    ],
+    "file_name": "Lazy Class/source34.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      14
+    ],
+    "file_name": "Long Method/source39.java"
+  },
+  {
+    "code_smell": "Lazy Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "file_name": "Lazy Class/source32.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "file_name": "Inappropriate Intimacy/source23.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60
+    ],
+    "file_name": "Message Chains/source46.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      7,
+      17,
+      35
+    ],
+    "file_name": "Message Chains/source46.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      4,
+      12
+    ],
+    "file_name": "Inappropriate Intimacy/source24.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "file_name": "Inappropriate Intimacy/source24.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "file_name": "Lazy Class/source31.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "file_name": "Long Method/source37.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67
+    ],
+    "file_name": "Message Chains/source47.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      13,
+      36
+    ],
+    "file_name": "Message Chains/source47.java"
+  },
+  {
+    "code_smell": "Duplicate Code",
+    "line_numbers": [
+      35,
+      46
+    ],
+    "file_name": "Shotgun Surgery/source61.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      4,
+      10,
+      20
+    ],
+    "file_name": "Shotgun Surgery/source61.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      15,
+      18,
+      20,
+      21
+    ],
+    "file_name": "Primitive Obsession/source55.java"
+  },
+  {
+    "code_smell": "Data Clumps",
+    "line_numbers": [
+      32,
+      47
+    ],
+    "file_name": "Shotgun Surgery/source60.java"
+  },
+  {
+    "code_smell": "Duplicate Code",
+    "line_numbers": [
+      35,
+      52
+    ],
+    "file_name": "Shotgun Surgery/source60.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+    ],
+    "file_name": "Long Method/source36.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133
+    ],
+    "file_name": "Primitive Obsession/source54.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "file_name": "Divergent Change/source17.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      30,
+      31,
+      32
+    ],
+    "file_name": "Divergent Change/source17.java"
+  },
+  {
+    "code_smell": "Switch Statements",
+    "line_numbers": [
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ],
+    "file_name": "Divergent Change/source17.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      36
+    ],
+    "file_name": "Long Parameter List/source43.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      58
+    ],
+    "file_name": "Long Parameter List/source44.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      15
+    ],
+    "file_name": "Long Parameter List/source42.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "file_name": "Primitive Obsession/source53.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97
+    ],
+    "file_name": "Long Method/source38.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      36
+    ],
+    "file_name": "Long Method/source38.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      36,
+      62,
+      63,
+      65,
+      66
+    ],
+    "file_name": "Long Method/source38.java"
+  },
+  {
+    "code_smell": "Switch Statements",
+    "line_numbers": [
+      114,
+      115,
+      116,
+      117
+    ],
+    "file_name": "Long Method/source38.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53
+    ],
+    "file_name": "Divergent Change/source18.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "file_name": "Divergent Change/source18.java"
+  },
+  {
+    "code_smell": "Switch Statements",
+    "line_numbers": [
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "file_name": "Divergent Change/source18.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      30
+    ],
+    "file_name": "Long Parameter List/source40.java"
+  },
+  {
+    "code_smell": "Switch Statements",
+    "line_numbers": [
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "file_name": "Switch Statements/source64.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      56
+    ],
+    "file_name": "Long Parameter List/source41.java"
+  },
+  {
+    "code_smell": "Switch Statements",
+    "line_numbers": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "file_name": "Switch Statements/source65.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "file_name": "Long Parameter List/source45.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      10
+    ],
+    "file_name": "Large Class/source28.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "file_name": "Temporary Field/source68.java"
+  },
+  {
+    "code_smell": "Data Class",
+    "line_numbers": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "file_name": "Large Class/source29.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      34
+    ],
+    "file_name": "Large Class/source30.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      9,
+      20,
+      31
+    ],
+    "file_name": "Data Clumps/source12.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "file_name": "Large Class/source27.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      81,
+      83,
+      85,
+      90,
+      92,
+      94,
+      102,
+      104,
+      107,
+      110
+    ],
+    "file_name": "Data Clumps/source13.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "file_name": "Temporary Field/source69.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "file_name": "Dead Code/source15.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      5,
+      23,
+      31,
+      39
+    ],
+    "file_name": "Data Clumps/source10.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "file_name": "Dead Code/source16.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      2
+    ],
+    "file_name": "Incomplete Library Class/source25.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54
+    ],
+    "file_name": "Middle Man/source48.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      4,
+      9,
+      16,
+      20,
+      23,
+      26
+    ],
+    "file_name": "Incomplete Library Class/source26.java"
+  },
+  {
+    "code_smell": "Large Class",
+    "line_numbers": [
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "file_name": "Data Clumps/source14.java"
+  },
+  {
+    "code_smell": "Duplicate Code",
+    "line_numbers": [
+      1,
+      8
+    ],
+    "file_name": "Alternative Classes With Different Interfaces/source1.java"
+  },
+  {
+    "code_smell": "Long Method",
+    "line_numbers": [
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ],
+    "file_name": "Middle Man/source49.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      23,
+      33,
+      42
+    ],
+    "file_name": "Parallel Inheritance Hierarchies/source51.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      4,
+      5,
+      6,
+      10,
+      14,
+      19,
+      22
+    ],
+    "file_name": "Duplicate Code/source20.java"
+  }
+]   15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "file_name": "Data Clumps/source11.java"
+  },
+  {
+    "code_smell": "Primitive Obsession",
+    "line_numbers": [
+      3,
+      5,
+      7,
+      9,
+      16,
+      18
+    ],
+    "file_name": "Data Clumps/source11.java"
+  },
+  {
+    "code_smell": "Long Parameter List",
+    "line_numbers": [
+      24,
+      25
+    ],
+    "file_name": "Data Clumps/source11.java"
+  }
+]
