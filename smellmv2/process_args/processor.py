@@ -15,7 +15,7 @@ from utils.config_util import get_model_details
 
 
 class Processor(ABC):
-    def __init__(self, file_path, file_type, model_name="gpt-4o-mini"):
+    def __init__(self, file_path, file_type, model_name="gpt-4o-mini-2024-07-18"):
         self.model_name = model_name
         # TODO: Cleanup this part because model details accessed many places.
         model_details = get_model_details(self.model_name)

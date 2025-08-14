@@ -20,7 +20,7 @@ class OAI(ChatAPI):
     This class is responsible for handling the OpenAI API calls for the chat completion task.
     """
     
-    def __init__(self, model_name="gpt-4o-mini"):
+    def __init__(self, model_name="gpt-4o-mini-2024-07-18"):
         if not self.__validate_oai_model_name(model_name):
             raise ValueError(f"Model name {model_name} is not valid.")
         self.model_name = model_name
