@@ -13,14 +13,14 @@ class SaveData():
     def save_file(self, data):
         
         for key, value in data.items():
-            # Replace any / or \ in the key with _
-            safe_filename = key.replace('/', '_').replace('\\', '_')
+            # Extract just the filename from the path (handle full paths or relative paths)
+            filename = os.path.basename(key)
             
-            if '.' in safe_filename:
-                filename_base = safe_filename.rsplit('.', 1)[0]  # Get the name without extension
+            if '.' in filename:
+                filename_base = filename.rsplit('.', 1)[0]  # Get the name without extension
                 safe_filename = f"{filename_base}.md"
             else:
-                safe_filename = f"{safe_filename}.md"
+                safe_filename = f"{filename}.md"
             
             # Create the full path to the file
             file_path = os.path.join(self.output_dir_path, safe_filename)

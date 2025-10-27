@@ -61,7 +61,11 @@ class TestOutput:
     def __merge_dataframes(self, df1, df2):
         # Merge two DataFrames on 'File Name' column
         try:
-            merged_df = pd.merge(df1, df2, on='File Name', how='inner')
+            # Drop result columns from previous test runs if they exist
+            result_columns = ['Detected Code Smells', 'True Positives', 'False Positives', 'False Negatives', 'True Negatives']
+            df1_clean = df1.drop(columns=[col for col in result_columns if col in df1.columns], errors='ignore')
+            
+            merged_df = pd.merge(df1_clean, df2, on='File Name', how='inner')
             merged_df['Expected Code Smells'] = merged_df['Expected Code Smells'].apply(self.__format_row_smell)
             merged_df['Detected Code Smells'] = merged_df['Detected Code Smells'].apply(self.__format_row_smell)
             return merged_df

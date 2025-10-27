@@ -44,7 +44,11 @@ class OutputSmellExtractor():
                 with open(file_path, 'r', encoding='utf-8') as file:
                     content = file.read()
                     
-                    matches = re.findall(r'- Code smell name - (.+)', content)
+                    # Try bold pattern first: - **Code smell name:** or - **Code smell name**:  
+                    matches = re.findall(r'- \*\*Code smell name:?\*\*:?\s*(.+)', content, re.IGNORECASE)
+                    # If no matches, try simple pattern: - Code smell name -
+                    if not matches:
+                        matches = re.findall(r'- Code smell name - (.+)', content, re.IGNORECASE)
                     main_file_name = file_name.split('_')[-1]
                     code_smells = [match.strip() for match in matches]
 
@@ -53,14 +57,8 @@ class OutputSmellExtractor():
     
 
 if __name__ == "__main__":
-    
-    # Path to your file
     folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../', 'java_single_file_code_smells/gpt-4o')
     smellExtractor = OutputSmellExtractor(output_path=folder_path, code_smells=constants.CODE_SMELLS)
-    
     detected_code_smells = smellExtractor.process_documents()
     print(detected_code_smells)
-    print("all matcher")
-    print(len(detected_code_smells))
-    # matched_smells = smellExtractor.match_with_smell_list(detected_code_smells, threshold=90)
-    # print(matched_smells)
+    print("Total files processed:", len(detected_code_smells))
