@@ -44,9 +44,32 @@ class OutputSmellExtractor():
                 with open(file_path, 'r', encoding='utf-8') as file:
                     content = file.read()
                     
-                    matches = re.findall(r'- Code smell name - (.+)', content)
+                    # Comprehensive regex pattern to handle all variations:
+                    # - Optional leading whitespace/indentation
+                    # - Optional bold markers around "Code smell name" (**Code smell name** or Code smell name)
+                    # - Both regular dash (-) and em dash (–)
+                    # - Optional bold markers around the smell name itself
+                    # - Captures the code smell name (stripping bold markers if present)
+                    # Pattern breakdown:
+                    # \s*-\s*                    : Optional whitespace, dash, optional whitespace
+                    # \*?\*?Code smell name\*?\*? : "Code smell name" with optional ** on both sides
+                    # \s*[–-]\s*                 : Separator (space, dash/em-dash, space)
+                    # (?:                        : Non-capturing group for optional bold markers
+                    #   \*\*([^*]+?)\*\*         : Bold name: **name**
+                    #   |                        : OR
+                    #   ([^\n]+?)                : Non-bold name (capture until newline)
+                    # )
+                    # (?=\s*\n|$)                : Lookahead for end of line
+                    pattern = r'\s*-\s*\*?\*?Code smell name\*?\*?\s*[–-]\s*(?:\*\*([^*]+?)\*\*|([^\n]+?))(?=\s*\n|$)'
+                    matches = re.findall(pattern, content, re.MULTILINE)
                     main_file_name = file_name.split('_')[-1]
-                    code_smells = [match.strip() for match in matches]
+                    # Extract from tuple (first group is bold, second is non-bold)
+                    code_smells = []
+                    for match in matches:
+                        # match is a tuple: (bold_name, non_bold_name) - one will be empty
+                        smell_name = match[0] if match[0] else match[1]
+                        if smell_name.strip():
+                            code_smells.append(smell_name.strip())
 
                     detected_code_smells[main_file_name] = self.match_with_smell_list(code_smells, threshold=70)
         return detected_code_smells
