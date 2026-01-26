@@ -12,6 +12,8 @@ class Prompt():
                 self.__create_prompts(user_input)
             case "ANTHROPIC":
                 self.__create_prompts(user_input)
+            case "TOGETHER":
+                self.__create_prompts(user_input)
             case _:
                 raise ValueError(f"Invalid prompt format: {prompt_format}")
             

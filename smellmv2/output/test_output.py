@@ -47,6 +47,13 @@ class TestOutput:
         self.fp = sum(merged_df['False Positives'])
         self.fn = sum(merged_df['False Negatives'])
         self.tn = sum(merged_df['True Negatives'])
+        
+        # Order columns: File Name, Expected Code Smells, Detected Code Smells, then the rest
+        column_order = ['File Name', 'Expected Code Smells', 'Detected Code Smells']
+        # Add remaining columns in their original order
+        remaining_columns = [col for col in merged_df.columns if col not in column_order]
+        merged_df = merged_df[column_order + remaining_columns]
+        
         self.test_file_handler.save_test(merged_df, self.__calculate_conf_matrix_vals(), self.__calculate_individual_smell_counts(matrix_data, merged_df))
         print("Test completed successfully.")
         
@@ -54,19 +61,36 @@ class TestOutput:
         # Convert the detected code smells to a DataFrame
         data = []
         for file_name, smells in detected_code_smells.items():
-            main_file = file_name.split('.')[0]
+            # Remove .md extension if present, and handle file names with underscores
+            main_file = file_name.replace('.md', '').split('_')[-1].split('.')[0]
             data.append({"File Name": main_file, "Detected Code Smells": smells})
         return pd.DataFrame(data)
     
     def __merge_dataframes(self, df1, df2):
         # Merge two DataFrames on 'File Name' column
         try:
-            merged_df = pd.merge(df1, df2, on='File Name', how='inner')
-            merged_df['Expected Code Smells'] = merged_df['Expected Code Smells'].apply(self.__format_row_smell)
-            merged_df['Detected Code Smells'] = merged_df['Detected Code Smells'].apply(self.__format_row_smell)
+            # Merge with suffixes to handle duplicate column names
+            merged_df = pd.merge(df1, df2, on='File Name', how='inner', suffixes=('_old', '_new'))
+            if merged_df.empty:
+                print("Warning: Merged DataFrame is empty. No matching file names found.")
+                return merged_df
+            # Use the new detected code smells (from df2) and drop the old one if it exists
+            if 'Detected Code Smells_new' in merged_df.columns:
+                merged_df['Detected Code Smells'] = merged_df['Detected Code Smells_new']
+                merged_df = merged_df.drop(columns=['Detected Code Smells_old'], errors='ignore')
+                merged_df = merged_df.drop(columns=['Detected Code Smells_new'], errors='ignore')
+            elif 'Detected Code Smells' in merged_df.columns:
+                # If no suffix was added, use the existing column
+                pass
+            if 'Expected Code Smells' in merged_df.columns:
+                merged_df['Expected Code Smells'] = merged_df['Expected Code Smells'].apply(self.__format_row_smell)
+            if 'Detected Code Smells' in merged_df.columns:
+                merged_df['Detected Code Smells'] = merged_df['Detected Code Smells'].apply(self.__format_row_smell)
             return merged_df
         except KeyError as e:
             print(f"KeyError: {e}. Please check the column names in the DataFrames.")
+            print(f"df1 columns: {df1.columns.tolist()}")
+            print(f"df2 columns: {df2.columns.tolist()}")
             return exit(1)
     
     def __calculate_conf_matrix_vals(self):
@@ -256,10 +280,10 @@ class TestOutput:
 
 if __name__ == "__main__":
     # Path to the directory containing documents
-    output_dir_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../', 'java_single_file_code_smells/gpt-4o-mini')
+    output_dir_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'output-2025-11-16-18-04-29')
     
-    # Path to the test file (if needed)
-    test_file_path = 'TEST-4o-mini-trial.xlsx'
+    # Path to the test file (in project root)
+    test_file_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'TEST-3-merged-preprompt.xlsx')
     
     # Create an instance of TestOutput
     test_output = TestOutput(output_dir_path, test_file_path)

@@ -11,6 +11,7 @@ from content_extractors.typescript.typescript_file_extractor import TypeScriptFi
 from chat_apis.prompt_engineering import Prompt
 from chat_apis.oai.oai_apis import OAI
 from chat_apis.claude.claude_apis import ANTHROPIC
+from chat_apis.together_ai.together_apis import TOGETHER
 from utils.config_util import get_model_details
 
 
@@ -56,6 +57,8 @@ class Processor(ABC):
                     client = OAI(self.model_name)
                 case "ANTHROPIC":
                     client = ANTHROPIC(self.model_name)
+                case "TOGETHER":
+                    client = TOGETHER(self.model_name)
                 case _:
                     raise ValueError(f"Invalid API type: {self.api_type}")
             if self.batch_possible and len(self.conversation_histories) > 1:
