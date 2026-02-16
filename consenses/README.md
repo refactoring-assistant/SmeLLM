@@ -19,6 +19,18 @@ Or if they want to use it within a virtual environment (recommended):
 
 ``` venv\Scripts\activate ```  On Windows
 
+## Dependency
+There is prerequisite to run file `set_manipulation.py`.
+However, file `set_manipulation.py` is imported to run file `consensus.py`.
+
+
+## Run consensus.py
+To run consenses analysis on excel result sheets obtained from SmeLLM, 
+configure excel sheets as constants: 
+
+* In file 'consensus.py': RUNNER_CONFIG as a key-value pair, where the key is the name of the model, and the value is the path to the excel sheet of that model.
+* The RUNNER_CONFIG as a whole indicates which group of baseline models that the consensus is drawn from.
+ 
 
 ## Terminology
 Define,
